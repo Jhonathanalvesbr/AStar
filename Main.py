@@ -172,7 +172,7 @@ def getCaminho(personagem,pernosagemAtual,pernosagemAlvo):
     x = int(personagem.rect.x/100)
     y = int(personagem.rect.y/100)
     caminho[y][x] = pernosagemAtual
-    movimento = busca.busca(caminho,pernosagemAtual,pernosagemAlvo)
+    movimento = busca.busca(caminho,[x,y],pernosagemAlvo)
     #print(movimento)
     caminho[y][x] = 0
     ini = time.time()
@@ -202,10 +202,15 @@ while True:
     if(len(fantasma) > 0):
         for f in fantasma:
             caminho[int(f.rect.y/100)][int(f.rect.x/100)] = -1
+            f.x = f.rect.y/100
+            f.y = f.rect.x/100
     if(len(comida) > 0):
         for c in comida:
             caminho[int(c.rect.y/100)][int(c.rect.x/100)] = 3
+
     caminho[int(pacMan.rect.y/100)][int(pacMan.rect.x/100)] = 1
+    pacMan.x = pacMan.rect.y/100
+    pacMan.y = pacMan.rect.x/100
 
     for event in pygame.event.get():
         teclado = pygame.key.get_pressed()
@@ -252,6 +257,9 @@ while True:
                 i = Personagem.Personagem()
                 i.sprite(tamanhoTela,spriteIninimigo)
                 fantasma.append(i)
+                fantasma[len(fantasma)-1].x = xTemp
+                fantasma[len(fantasma)-1].y = yTemp
+                fantasma[len(fantasma)-1].velocidade = 0.001
                 fantasma[len(fantasma)-1].rect.y = xTemp*100
                 fantasma[len(fantasma)-1].rect.x = yTemp*100
                 todas_as_sprites.add(fantasma[len(fantasma)-1])

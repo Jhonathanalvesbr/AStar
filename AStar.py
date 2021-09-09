@@ -157,13 +157,12 @@ class Astar():
             print()
         print()
 
-    def busca(self, caminho, pernosagemAtual, target):
+    def busca(self, caminho, posicaoPersonagemXY, target):
+        iniX = posicaoPersonagemXY[0]
+        iniY = posicaoPersonagemXY[1]
         for x in range(len(caminho)):
             for y in range(len(caminho)):
-                if(caminho[x][y] == pernosagemAtual):
-                    iniX = x
-                    iniY = y
-                elif(caminho[x][y] == target):
+                if(caminho[x][y] == target):
                     desX = x
                     desY = y
         listaAberta = []

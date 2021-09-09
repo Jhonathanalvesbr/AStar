@@ -13,13 +13,16 @@ class Personagem(pygame.sprite.Sprite):
         self.seguir = False
         self.mover = 0 
         self.movimento = []
+        self.velocidade = 0.005
+        self.x = 0
+        self.y = 0
 
         for i in range(len(self.sprites)):
             self.image = self.sprites[i]
             self.image = pygame.transform.rotate(self.image,200)
             
     def update(self):
-        self.atual = self.atual + 0.005
+        self.atual = self.atual + self.velocidade 
         if self.atual >= len(self.sprites):
             self.atual = 0
         
