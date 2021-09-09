@@ -161,7 +161,6 @@ class Astar():
         for x in range(len(caminho)):
             for y in range(len(caminho)):
                 if(caminho[x][y] == pernosagemAtual):
-                    print(caminho[x][y])
                     iniX = x
                     iniY = y
                 elif(caminho[x][y] == target):

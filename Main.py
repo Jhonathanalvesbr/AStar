@@ -56,26 +56,15 @@ def caminhoPrint():
         print(caminho[i])
     print()
 
-def getCaminho(personagem,movimento,pernosagemAtual,pernosagemAlvo,player):
-    global ini
-    time.sleep(0.05)
-    x = int(personagem.rect.x/100)
-    y = int(personagem.rect.y/100)
-    px = int(player.rect.x/100)
-    py = int(player.rect.y/100)
-    caminho[py][px] = 1
-    caminhoPrint()
-    movimento = busca.busca(caminho,pernosagemAtual,targetComida)
-    print(movimento)
-    caminho[y][x] = 0
-    ini = time.time()
-    
-    return movimento
 
-def mover(personagem, movimento, target):
+def moverInimigo(personagem, movimento, target, player):
+    global pp
     global ini
     global fim
     if(fim-ini  > 0.5 and len(movimento) > 0):
+        iniY = int(player.rect.x/100)
+        iniX = int(player.rect.y/100)
+        pp = 0
         if(personagem.rect.x < movimento[0][0]*100):
             personagem.angle = 0
         if(personagem.rect.x > movimento[0][0]*100):
@@ -93,44 +82,128 @@ def mover(personagem, movimento, target):
         p.append(personagem.rect.y)
         movimento.pop(0)
         if(len(movimento) == 0):
-            if(caminhoVazio(target) == 1):
-                xTemp = iniY = int(personagem.rect.x/100)
-                yTemp = iniX = int(personagem.rect.y/100)
-                desX = int(xTemp)
-                desY = int(yTemp)
-                caminho[iniX][iniY] = 1
-                if(caminhoVazio(target) == 1):
-                    movimento = busca.busca(caminho,targetPacMan,targetComida)
-                    caminho[yTemp][xTemp] = 0
+            
+            encosta(pacMan,comida) 
+            for x in range(len(caminho)):
+                for y in range(len(caminho)):
+                    caminho[x][y] = 0
+            if(len(fantasma) > 0):
+                for f in fantasma:
+                    caminho[int(f.rect.y/100)][int(f.rect.x/100)] = -1
+            if(len(comida) > 0):
+                for c in comida:
+                    caminho[int(c.rect.y/100)][int(c.rect.x/100)] = 3
+
+            caminho[int(pacMan.rect.y/100)][int(pacMan.rect.x/100)] = 1
+            
+            
+            if(len(comida) > 0):
+                mov = getCaminho(pacMan,1,-1)
+                for i in mov:
+                    movimento.append(i)
+        
+
+
+def mover(personagem, movimento,target):
+    global ini
+    global fim
+    if(movimento != None and fim-ini  > 0.5 and len(movimento) > 0):
+        if(personagem.rect.x < movimento[0][0]*100):
+            personagem.angle = 0
+        if(personagem.rect.x > movimento[0][0]*100):
+            personagem.angle = 180
+        if(personagem.rect.y > movimento[0][1]*100):
+            personagem.angle = -90
+        if(personagem.rect.y > movimento[0][1]*100):
+            personagem.angle = 90
+        
+        
+        personagem.rect.x = movimento[0][0]*100
+        personagem.rect.y =  movimento[0][1]*100
+       
+        p = []
+        p.append(personagem.rect.x)
+        p.append(personagem.rect.y)
+        movimento.pop(0)
+        print(movimento)
+        if(len(movimento) == 0):
+            
+            encosta(pacMan,comida) 
+            for x in range(len(caminho)):
+                for y in range(len(caminho)):
+                    caminho[x][y] = 0
+            if(len(fantasma) > 0):
+                for f in fantasma:
+                    caminho[int(f.rect.y/100)][int(f.rect.x/100)] = -1
+            if(len(comida) > 0):
+                for c in comida:
+                    caminho[int(c.rect.y/100)][int(c.rect.x/100)] = 3
+
+            caminho[int(pacMan.rect.y/100)][int(pacMan.rect.x/100)] = 1
+            
+            
+            if(len(comida) > 0):
+                mov = getCaminho(pacMan,1,target)
+                for i in mov:
+                    movimento.append(i)
+                
+        ini = time.time()
+
+
+
 
 def encosta(personagem,encosta):
     p = []
     p.append(personagem.rect.x)
     p.append(personagem.rect.y)
-    for i in encosta:
-        if(i.rect.collidepoint(p)):
-            if(isinstance(i, Personagem.Personagem)):
-                todas_as_sprites.remove(i)
-                caminho[int(p[1]/100)][int(p[0]/100)] = 0 
+    i = 0
+    while i in range(len(encosta)):
+        if(encosta[i].rect.collidepoint(p)):
+            if(isinstance(encosta[i], Personagem.Personagem)):
+                todas_as_sprites.remove(encosta[i])
+                encosta.pop(i)
+                break
+        i += 1
 
+def getCaminho(personagem,pernosagemAtual,pernosagemAlvo):
+    movimento = []
+    global ini
+    time.sleep(0.05)
+    x = int(personagem.rect.x/100)
+    y = int(personagem.rect.y/100)
+    caminho[y][x] = pernosagemAtual
+    movimento = busca.busca(caminho,pernosagemAtual,pernosagemAlvo)
+    #print(movimento)
+    caminho[y][x] = 0
+    ini = time.time()
+    
+    return movimento
+
+pp = 0
 while True:
     fim = time.time()
-    if(len(fantasma) > 0):
-        fantasmaMovimento = getCaminho(fantasma[0],fantasmaMovimento,targetFantasma,targetPacMan,pacMan)
+    if(len(fantasma) > 0 and pp == 0):
+        pp += 1
+        fantasmaMovimento = getCaminho(fantasma[0],targetFantasma,targetPacMan)
+
+    if(len(fantasma)>0):
+        moverInimigo(fantasma[0],fantasmaMovimento,-1,pacMan)
         
 
     mover(pacMan,movimentoPacMan,targetComida)
-        
-        
-        #for i in comida:
-        #    if(i.rect.collidepoint(p)):
-        #        if(isinstance(i, Personagem.Personagem)):
-        #            todas_as_sprites.remove(i)
-        #            caminho[movimento[0][0]][movimento[0][1]] = 0
-        
     encosta(pacMan,comida)        
-                    
     
+    for x in range(len(caminho)):
+        for y in range(len(caminho)):
+            caminho[x][y] = 0
+    if(len(fantasma) > 0):
+        for f in fantasma:
+            caminho[int(f.rect.y/100)][int(f.rect.x/100)] = -1
+    if(len(comida) > 0):
+        for c in comida:
+            caminho[int(c.rect.y/100)][int(c.rect.x/100)] = 3
+    caminho[int(pacMan.rect.y/100)][int(pacMan.rect.x/100)] = 1
+
     for event in pygame.event.get():
         teclado = pygame.key.get_pressed()
         if(teclado[pygame.K_LEFT]):
@@ -138,7 +211,7 @@ while True:
                 if(caminho[int(pacMan.rect.y/100)][int(pacMan.rect.x/100)-1] != -1):
                     pacMan.esquerda()
                     pacMan.angulo(180)
-                    
+    
         if(teclado[pygame.K_RIGHT]):
             if(pacMan.rect.x < 700):
                 if(caminho[int(pacMan.rect.y/100)][int(pacMan.rect.x/100)+1] != -1):
@@ -156,17 +229,15 @@ while True:
                 if(caminho[int(pacMan.rect.y/100)+1][int(pacMan.rect.x/100)] != -1):
                     pacMan.baixo()
                     pacMan.angulo(-90)
-        
+
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
             
         if(teclado[pygame.K_F5]):
             if(caminhoVazio(targetComida) == 1):
-                movimentoPacMan = getCaminho(pacMan,movimentoPacMan,targetPacMan,targetComida,pacMan)
-    
+                movimentoPacMan = getCaminho(pacMan,targetPacMan,targetComida)
 
-   
         if(pygame.mouse.get_pressed()[0] == True):
             pos = pygame.mouse.get_pos()
             xTemp = int(pos[1]/100)
@@ -181,20 +252,16 @@ while True:
                 fantasma[len(fantasma)-1].rect.y = xTemp*100
                 fantasma[len(fantasma)-1].rect.x = yTemp*100
                 todas_as_sprites.add(fantasma[len(fantasma)-1])
-                while(caminho[xTemp][yTemp] == 0):
-                    caminho[xTemp][yTemp] = -1
-                time.sleep(0.01)
             else:
-                for i in fantasma:
-                    if(i.rect.collidepoint(p)):
-                        if(isinstance(i, Personagem.Personagem)):
-                            todas_as_sprites.remove(i)
-                            while(caminho[xTemp][yTemp] == -1):
-                                caminho[xTemp][yTemp] = 0
-                            time.sleep(0.01)
-            
-                            
-
+                i = 0
+                while i < len(fantasma):
+                    if(fantasma[i].rect.collidepoint(p)):
+                        if(isinstance(fantasma[i], Personagem.Personagem)):
+                            todas_as_sprites.remove(fantasma[i])
+                            fantasma.pop(i)
+                            break
+                    i += 1
+                
         if(pygame.mouse.get_pressed()[2] == True):
             pos = pygame.mouse.get_pos()
             xTemp = int(pos[1]/100)
@@ -209,18 +276,16 @@ while True:
                 comida[len(comida)-1].rect.y = xTemp*100
                 comida[len(comida)-1].rect.x = yTemp*100
                 todas_as_sprites.add(comida[len(comida)-1])
-                while(caminho[xTemp][yTemp] == 0):
-                    caminho[xTemp][yTemp] = 3
                 time.sleep(0.01)
             else:
-                for i in comida:
-                    if(i.rect.collidepoint(p)):
-                        if(isinstance(i, Personagem.Personagem)):
-                            todas_as_sprites.remove(i)
-                            while(caminho[xTemp][yTemp] == 3):
-                                caminho[xTemp][yTemp] = 0
-                            time.sleep(0.01)
-            caminhoPrint()
+                i = 0
+                while i < len(comida):
+                    if(comida[i].rect.collidepoint(p)):
+                        if(isinstance(comida[i], Personagem.Personagem)):
+                            todas_as_sprites.remove(comida[i])
+                            comida.pop(i)
+                            break
+                    i += 1
 
     pygame.draw.line(janela, pygame.Color(255,255,255), (0, 700), (800, 700), 1)
     pygame.draw.line(janela, pygame.Color(255,255,255), (0, 600), (800, 600), 1)
@@ -229,8 +294,6 @@ while True:
     pygame.draw.line(janela, pygame.Color(255,255,255), (0, 300), (800, 300), 1)
     pygame.draw.line(janela, pygame.Color(255,255,255), (0, 200), (800, 200), 1)
     pygame.draw.line(janela, pygame.Color(255,255,255), (0, 100), (800, 100), 1)
-
-  
 
 
     pygame.draw.line(janela, pygame.Color(255,255,255), (100, 0), (100, 800), 1)
