@@ -10,6 +10,9 @@ class Personagem(pygame.sprite.Sprite):
         self.angle = 0
         self.rect = self.image.get_rect()
         self.rect.topleft = 100,100
+        self.seguir = False
+        self.mover = 0 
+        self.movimento = []
 
         for i in range(len(self.sprites)):
             self.image = self.sprites[i]
