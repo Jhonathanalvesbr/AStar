@@ -16,7 +16,7 @@ caminho = []
 movimentoPacMan = []
 fantasmaMovimento = []
 busca = AStar.Astar(tamanho)
-
+ini = fim = time.time()
 for y in range(tamanho):
     linha = []
     for x in range(tamanho):
@@ -57,8 +57,10 @@ def caminhoPrint():
     print()
 
 
-def mover(personagem, movimento):
-    if(personagem.fim-personagem.ini  > 0.5 and len(movimento) > 0):
+def moverInimigo(personagem, movimento, target, player):
+    global ini
+    global fim
+    if(fim-ini  > 0.5 and len(movimento) > 0):
         for f in fantasma:
             if(f.mover == 1):
                 f.mover = 0
@@ -71,7 +73,7 @@ def mover(personagem, movimento):
         if(personagem.rect.y > movimento[0][1]*100):
             personagem.angle = 90
         
-        personagem.ini = time.time()
+        ini = time.time()
         personagem.rect.x = movimento[0][0]*100
         personagem.rect.y =  movimento[0][1]*100
         p = []
@@ -109,11 +111,55 @@ def mover(personagem, movimento):
                 for i in mov:
                     movimento.append(i)
                 pacMan.movimento = mov
-            if(len(comida) == 0):
-                pacMan.mover = 0
-                pacMan.seguir = False
-        personagem.ini = time.time()
+                
+                
+        
 
+
+def mover(personagem, movimento,target):
+    global ini
+    global fim
+    if(movimento != None and fim-ini  > 0.5 and len(movimento) > 0):
+        if(personagem.rect.x < movimento[0][0]*100):
+            personagem.angle = 0
+        if(personagem.rect.x > movimento[0][0]*100):
+            personagem.angle = 180
+        if(personagem.rect.y > movimento[0][1]*100):
+            personagem.angle = -90
+        if(personagem.rect.y > movimento[0][1]*100):
+            personagem.angle = 90
+        
+        
+        personagem.rect.x = movimento[0][0]*100
+        personagem.rect.y =  movimento[0][1]*100
+       
+        p = []
+        p.append(personagem.rect.x)
+        p.append(personagem.rect.y)
+        movimento.pop(0)
+
+        if(len(movimento) == 0):
+            
+            encosta(pacMan,comida) 
+            for x in range(len(caminho)):
+                for y in range(len(caminho)):
+                    caminho[x][y] = 0
+            if(len(fantasma) > 0):
+                for f in fantasma:
+                    caminho[int(f.rect.y/100)][int(f.rect.x/100)] = -1
+            if(len(comida) > 0):
+                for c in comida:
+                    caminho[int(c.rect.y/100)][int(c.rect.x/100)] = 3
+
+            caminho[int(pacMan.rect.y/100)][int(pacMan.rect.x/100)] = 1
+            
+            
+            if(len(comida) > 0):
+                mov = getCaminho(pacMan,1,target)
+                for i in mov:
+                    movimento.append(i)
+                
+        ini = time.time()
 
 def encosta(personagem,encosta):
     p = []
@@ -130,16 +176,20 @@ def encosta(personagem,encosta):
 
 def getCaminho(personagem,pernosagemAtual,pernosagemAlvo):
     movimento = []
-    
+    global ini
+    time.sleep(0.05)
     x = int(personagem.rect.x/100)
     y = int(personagem.rect.y/100)
     caminho[y][x] = pernosagemAtual
-    movimento = busca.busca(caminho,[y,x],pernosagemAlvo)
+    movimento = busca.busca(caminho,[int(personagem.y),int(personagem.x)],pernosagemAlvo)
     #print(movimento)
     caminho[y][x] = 0
+    ini = time.time()
+    
     return movimento
 
 while True:
+    fim = time.time()
     if(len(fantasma) > 0):
         for f in fantasma:
             if(f.mover == 0 and f.seguir == True):
@@ -149,14 +199,14 @@ while True:
     if(len(fantasma)>0):
         for f in fantasma:
             if(f.mover == 1 and f.seguir == True):
-                mover(f,f.movimento)
+                moverInimigo(f,f.movimento,-1,pacMan)
         
     if(pacMan.mover == 0 and pacMan.seguir == True):
         pacMan.movimento = getCaminho(pacMan,1,targetComida)
         pacMan.mover += 1
     elif(pacMan.mover == 1 and pacMan.seguir == True):
-        mover(pacMan,pacMan.movimento)
-    
+        moverInimigo(pacMan,pacMan.movimento,1,comida)
+        
 
         
     encosta(pacMan,comida)        
@@ -169,16 +219,14 @@ while True:
             caminho[int(f.rect.y/100)][int(f.rect.x/100)] = -1
             f.x = f.rect.y/100
             f.y = f.rect.x/100
-            f.fim= time.time()
     if(len(comida) > 0):
         for c in comida:
             caminho[int(c.rect.y/100)][int(c.rect.x/100)] = 3
-            c.fim = time.time()
 
     caminho[int(pacMan.rect.y/100)][int(pacMan.rect.x/100)] = 1
     pacMan.x = pacMan.rect.y/100
     pacMan.y = pacMan.rect.x/100
-    pacMan.fim = time.time()
+
     for event in pygame.event.get():
         teclado = pygame.key.get_pressed()
         if(teclado[pygame.K_LEFT]):
@@ -256,7 +304,7 @@ while True:
                 comida[len(comida)-1].rect.y = xTemp*100
                 comida[len(comida)-1].rect.x = yTemp*100
                 todas_as_sprites.add(comida[len(comida)-1])
-                
+                time.sleep(0.01)
             else:
                 i = 0
                 while i < len(comida):
@@ -268,7 +316,7 @@ while True:
                     i += 1
 
         if(pygame.mouse.get_pressed()[1] == True):
-            
+            time.sleep(0.01)
             pos = pygame.mouse.get_pos()
             xTemp = int(pos[1]/100)
             yTemp = int(pos[0]/100)

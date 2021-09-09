@@ -1,4 +1,5 @@
 import pygame
+import time
 
 
 class Personagem(pygame.sprite.Sprite):
@@ -16,7 +17,8 @@ class Personagem(pygame.sprite.Sprite):
         self.velocidade = 0.005
         self.x = 0
         self.y = 0
-
+        self.ini = time.time()
+        self.fim = time.time()
         for i in range(len(self.sprites)):
             self.image = self.sprites[i]
             self.image = pygame.transform.rotate(self.image,200)
