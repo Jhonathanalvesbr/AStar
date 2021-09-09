@@ -108,41 +108,41 @@ class Astar():
             # print("45")
             return (Estado.Estado(iniX-1, iniY+1))
 
-    def win(self, e):
+    def win(self, e, target):
         if(e == -1):
             return -1
         iniX = e.x
         iniY = e.y
         # Baixo
-        if(iniX+1 >= 0 and iniY >= 0 and iniX+1 < self.tamanho and iniY < self.tamanho and self.caminho[iniX+1][iniY] == 3):
+        if(iniX+1 >= 0 and iniY >= 0 and iniX+1 < self.tamanho and iniY < self.tamanho and self.caminho[iniX+1][iniY] == target):
             # print("Baixo")
             return Estado.Estado(iniX+1, iniY)
         # Cima
-        elif(iniX-1 >= 0 and iniY >= 0 and iniX-1 < self.tamanho and iniY < self.tamanho and self.caminho[iniX-1][iniY] == 3):
+        elif(iniX-1 >= 0 and iniY >= 0 and iniX-1 < self.tamanho and iniY < self.tamanho and self.caminho[iniX-1][iniY] == target):
             # print("Cima")
             return Estado.Estado(iniX-1, iniY)
         # Direita
-        elif(iniX >= 0 and iniY+1 >= 0 and iniX < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX][iniY+1] == 3):
+        elif(iniX >= 0 and iniY+1 >= 0 and iniX < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX][iniY+1] == target):
             # print("Direita")
             return Estado.Estado(iniX, iniY+1)
         # Esquerda
-        elif(iniX >= 0 and iniY-1 >= 0 and iniX < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX][iniY-1] == 3):
+        elif(iniX >= 0 and iniY-1 >= 0 and iniX < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX][iniY-1] == target):
             # print("Esquerda")
             return Estado.Estado(iniX, iniY-1)
         # 135
-        elif(iniX+1 >= 0 and iniY+1 >= 0 and iniX+1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX+1][iniY+1] == 3):
+        elif(iniX+1 >= 0 and iniY+1 >= 0 and iniX+1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX+1][iniY+1] == target):
             # print("135")
             return Estado.Estado(iniX+1, iniY+1)
         # 225
-        elif(iniX+1 >= 0 and iniY-1 >= 0 and iniX+1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX+1][iniY-1] == 3):
+        elif(iniX+1 >= 0 and iniY-1 >= 0 and iniX+1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX+1][iniY-1] == target):
             # print("225")
             return Estado.Estado(iniX+1, iniY-1)
         # 315
-        elif(iniX-1 >= 0 and iniY-1 >= 0 and iniX-1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX-1][iniY-1] == 3):
+        elif(iniX-1 >= 0 and iniY-1 >= 0 and iniX-1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX-1][iniY-1] == target):
             # print("315")
             return Estado.Estado(iniX-1, iniY-1)
         # 45
-        elif(iniX-1 >= 0 and iniY+1 >= 0 and iniX-1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX-1][iniY+1] == 3):
+        elif(iniX-1 >= 0 and iniY+1 >= 0 and iniX-1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX-1][iniY+1] == target):
             # print("45")
             return Estado.Estado(iniX-1, iniY+1)
         else:
@@ -157,13 +157,14 @@ class Astar():
             print()
         print()
 
-    def busca(self, caminho):
+    def busca(self, caminho, pernosagemAtual, target):
         for x in range(len(caminho)):
             for y in range(len(caminho)):
-                if(caminho[x][y] == 1):
+                if(caminho[x][y] == pernosagemAtual):
+                    print(caminho[x][y])
                     iniX = x
                     iniY = y
-                elif(caminho[x][y] == 3):
+                elif(caminho[x][y] == target):
                     desX = x
                     desY = y
         listaAberta = []
@@ -174,7 +175,7 @@ class Astar():
             pai = listaAberta[0]
             listaFechada.append(pai)
             listaAberta.pop(0)
-            w = self.win(pai)
+            w = self.win(pai,target)
             if(w != -1):
                 #print("Win")
                 w.parente = pai
@@ -204,6 +205,6 @@ class Astar():
     def CaminhoVazio(self, caminho):
         for x in range(len(self.caminho)):
             for y in range(len(self.caminho)):
-                if(self.caminho[x][y] == 3):
+                if(self.caminho[x][y] == target):
                     return 1
         return -1
