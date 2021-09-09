@@ -58,7 +58,7 @@ def caminhoPrint():
 
 
 def mover(personagem, movimento):
-    if(personagem.fim-personagem.ini  > 0.5 and len(movimento) > 0):
+    if(personagem.fim-personagem.ini  > personagem.velocidade and len(movimento) > 0):
         for f in fantasma:
             if(f.mover == 1):
                 f.mover = 0
@@ -228,7 +228,7 @@ while True:
                 fantasma.append(i)
                 fantasma[len(fantasma)-1].x = xTemp
                 fantasma[len(fantasma)-1].y = yTemp
-                fantasma[len(fantasma)-1].velocidade = 0.01
+                fantasma[len(fantasma)-1].velocidade = 1
                 fantasma[len(fantasma)-1].rect.y = xTemp*100
                 fantasma[len(fantasma)-1].rect.x = yTemp*100
                 todas_as_sprites.add(fantasma[len(fantasma)-1])
