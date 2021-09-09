@@ -202,7 +202,7 @@ class Astar():
             print()
             a = a.parente
 
-    def CaminhoVazio(self, caminho):
+    def CaminhoVazio(self, caminho, target):
         for x in range(len(self.caminho)):
             for y in range(len(self.caminho)):
                 if(self.caminho[x][y] == target):
