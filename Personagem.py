@@ -19,7 +19,11 @@ class Personagem(pygame.sprite.Sprite):
         self.y = 0
         self.ini = time.time()
         self.fim = time.time()
-
+        self.tamanho = 0
+        self.caminhar = False
+        self.desX = None
+        self.desY = None
+        
         for i in range(len(self.sprites)):
             self.image = self.sprites[i]
             self.image = pygame.transform.rotate(self.image,200)

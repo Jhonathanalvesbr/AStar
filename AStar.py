@@ -1,5 +1,6 @@
 import math
 import Estado
+import random
 
 def inserir(lista, aux):
     j = 0
@@ -156,15 +157,60 @@ class Astar():
                 print("|", end="")
             print()
         print()
+        
+    def buscaIndices(self,indice,tamanho):
+        indice1 = indice
+        indice2 = indice
+        t = tamanho
+        if(t > self.tamanho):
+            t = self.tamanho
+        while(t > 0):
+            if(indice1 > 0):
+                t -= 1
+                indice1 -= 1
+                if(t == 0):
+                    break
+            if(indice2 < self.tamanho):
+                indice2 += 1
+                t -= 1
+        
+        return [indice1,indice2]
 
-    def busca(self, caminho, posicaoPersonagemXY, target):
+    def busca(self, c, posicaoPersonagemXY, target, posicaoX, posicaoY, personagem):
+        caminho = c[:]
         iniX = posicaoPersonagemXY[0]
         iniY = posicaoPersonagemXY[1]
-        for x in range(len(caminho)):
-            for y in range(len(caminho)):
+        if(iniX == personagem.desX and iniY == personagem.desY):
+            personagem.desX = None
+        xx = self.buscaIndices(posicaoX,personagem.tamanho)
+        yy = self.buscaIndices(posicaoY,personagem.tamanho)
+        for x in range(xx[0],xx[1]):
+            for y in range(yy[0],yy[1]):
+                print(caminho[x][y], end="")
                 if(caminho[x][y] == target):
-                    desX = x
-                    desY = y
+                    personagem.desX = x
+                    personagem.desY = y
+            print("")
+        
+        if(personagem.caminhar == True and personagem.desX == None):
+            xTemp = random.randint(xx[0],xx[1])
+            yTemp = random.randint(yy[0],yy[1])
+            if(xTemp == self.tamanho):
+                xTemp -= 1
+            if(yTemp == self.tamanho):
+                yTemp -= 1
+
+            personagem.desX = xTemp
+            personagem.desY = yTemp
+        if(personagem.caminhar == True):
+            caminho[personagem.desX][personagem.desY] = -2
+            target  = -2
+        print(personagem.desX)
+        print(personagem.desY)
+        print("============")
+        if(personagem.desX == None):
+            return None
+        
         listaAberta = []
         listaFechada = []
         self.caminho = caminho
@@ -182,7 +228,7 @@ class Astar():
                 filho = self.criarNo(pai, i)
                 if(filho != None and existe(listaAberta, filho) != 1 and existe(listaFechada, filho) != 1):
                     filho.g = pai.g + 1.0
-                    filho.h = custo(filho.x, filho.y, desX, desY)
+                    filho.h = custo(filho.x, filho.y, personagem.desX, personagem.desY)
                     filho.f = filho.g + filho.h
                     filho.parente = pai
                     inserir(listaAberta, filho)

@@ -35,7 +35,7 @@ spriteIninimigo.append(pygame.image.load('f1.png'))
 spriteComida.append(pygame.image.load('c1.png'))
 pacMan = Personagem.Personagem()
 pacMan.sprite(tamanhoTela,spritePacMan)
-
+pacMan.tamanho = tamanho
 todas_as_sprites = pygame.sprite.Group()
 todas_as_sprites.add(pacMan)
 fantasma = []
@@ -70,7 +70,7 @@ def mover(personagem, movimento):
             personagem.angle = -90
         if(personagem.rect.y > movimento[0][1]*100):
             personagem.angle = 90
-        
+        print(personagem.movimento)
         personagem.ini = time.time()
         personagem.rect.x = movimento[0][0]*100
         personagem.rect.y =  movimento[0][1]*100
@@ -101,14 +101,16 @@ def mover(personagem, movimento):
                 for f in fantasma:
                     if(f.mover == 0 and f.seguir == True):
                         mov = getCaminho(pacMan,1,-1)
-                        for i in mov:
-                            movimento.append(i)
-                        f.movimento = mov
+                        if(mov != None):
+                            for i in mov:
+                                movimento.append(i)
+                            f.movimento = mov
             if(len(comida) > 0):
                 mov = getCaminho(pacMan,1,3)
-                for i in mov:
-                    movimento.append(i)
-                pacMan.movimento = mov
+                if(mov != None):
+                    for i in mov:
+                        movimento.append(i)
+                    pacMan.movimento = mov
             if(len(comida) == 0):
                 pacMan.mover = 0
                 pacMan.seguir = False
@@ -134,7 +136,9 @@ def getCaminho(personagem,pernosagemAtual,pernosagemAlvo):
     x = int(personagem.rect.x/100)
     y = int(personagem.rect.y/100)
     caminho[y][x] = pernosagemAtual
-    movimento = busca.busca(caminho,[y,x],pernosagemAlvo)
+    movimento = busca.busca(caminho,[y,x],pernosagemAlvo,x,y,personagem)
+    if(movimento == None):
+        return None
     #print(movimento)
     caminho[y][x] = 0
     return movimento
@@ -143,8 +147,13 @@ while True:
     if(len(fantasma) > 0):
         for f in fantasma:
             if(f.mover == 0 and f.seguir == True):
-                f.movimento = getCaminho(f,-1,targetPacMan)
-                f.mover += 1
+                temp = getCaminho(f,-1,targetPacMan)
+                if(temp != None):
+                    f.movimento = temp
+                    f.mover += 1
+                else:
+                    f.mover = 0
+                    f.seguir = False
 
     if(len(fantasma)>0):
         for f in fantasma:
@@ -152,8 +161,13 @@ while True:
                 mover(f,f.movimento)
         
     if(pacMan.mover == 0 and pacMan.seguir == True):
-        pacMan.movimento = getCaminho(pacMan,1,targetComida)
-        pacMan.mover += 1
+        temp = getCaminho(pacMan,1,targetComida)
+        if(temp != None):
+            pacMan.movimento = temp
+            pacMan.mover += 1
+        else:
+            pacMan.mover = 0
+            pacMan.seguir = False
     elif(pacMan.mover == 1 and pacMan.seguir == True):
         mover(pacMan,pacMan.movimento)
     
@@ -227,6 +241,8 @@ while True:
                 i.sprite(tamanhoTela,spriteIninimigo)
                 fantasma.append(i)
                 fantasma[len(fantasma)-1].x = xTemp
+                fantasma[len(fantasma)-1].tamanho = 5
+                fantasma[len(fantasma)-1].caminhar = Falsedsfd
                 fantasma[len(fantasma)-1].y = yTemp
                 fantasma[len(fantasma)-1].velocidade = 1
                 fantasma[len(fantasma)-1].rect.y = xTemp*100
