@@ -70,6 +70,7 @@ def mover(personagem, movimento):
             personagem.angle = -90
         if(personagem.rect.y > movimento[0][1]*100):
             personagem.angle = 90
+            
         print(personagem.movimento)
         personagem.ini = time.time()
         personagem.rect.x = movimento[0][0]*100
