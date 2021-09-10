@@ -34,7 +34,7 @@ class Personagem(pygame.sprite.Sprite):
             self.atual = 0
         
         self.image = self.sprites[int(self.atual)]
-        self.image = pygame.transform.scale(self.image,(int(self.tamanhoTela/25)*3,int(self.tamanhoTela/25)*3))
+        self.image = pygame.transform.scale(self.image,(int(self.tamanhoTela/25)*1,int(self.tamanhoTela/25)*1))
         self.image = pygame.transform.rotate(self.image,self.angle)
         
     def angulo(self,angle):
@@ -43,14 +43,14 @@ class Personagem(pygame.sprite.Sprite):
     def angulo(self,angle):
         self.angle = angle
 
-    def cima(self):
-        self.rect.move_ip(0,-100)
+    def cima(self, passo):
+        self.rect.move_ip(0,-passo)
 
-    def baixo(self):
-        self.rect.move_ip(0,100)
+    def baixo(self,passo):
+        self.rect.move_ip(0,passo)
 
-    def esquerda(self):
-        self.rect.move_ip(-100,0)
+    def esquerda(self,passo):
+        self.rect.move_ip(-passo,0)
 
-    def direita(self):
-        self.rect.move_ip(100,0)
+    def direita(self,passo):
+        self.rect.move_ip(passo,0)
