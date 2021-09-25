@@ -23,7 +23,7 @@ def existe(lista, filho):
 def custoH(x, y, desX, desY, g):
     dx = (x - desX)
     dy = (y - desY)
-    #return abs(dx)+abs(dy)
+    
     return abs(max(dx,dy)) #A quantidade de nós gerados foram: 58  - Custo total: 18
     #return abs(min(dx,dy))  #A quantidade de nós gerados foram: 125 - Custo total: 18
     #return (dx*dy) + (dy*dy)  #A quantidade de nós gerados foram: 170 - Custo total: 32
@@ -32,6 +32,8 @@ def custoH(x, y, desX, desY, g):
     #return abs(dx) + abs(dy) #A quantidade de nós gerados foram: 94 - Custo total: 23
     #return abs(x - desX) + abs(y - desY)  #A quantidade de nós gerados foram: 94 - Custo total: 23
     #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))  #A quantidade de nós gerados foram: 102 - Custo total: 23
+    #return abs(dx)+abs(dy)
+
     
     #return g+math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))
 
