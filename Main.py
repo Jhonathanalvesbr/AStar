@@ -11,8 +11,8 @@ targetPacMan = 1
 targetFantasma = -1
 targetComida = 3
 tamanhoTela = 600
-dividir = 25
-tamanho = int(tamanhoTela/dividir)
+passo = 25
+tamanho = int(tamanhoTela/passo)
 caminho = []
 movimentoPacMan = []
 fantasmaMovimento = []
@@ -37,12 +37,14 @@ spriteComida.append(pygame.image.load('c1.png'))
 pacMan = Personagem.Personagem()
 pacMan.sprite(tamanhoTela,spritePacMan)
 pacMan.tamanho = tamanho
+pacMan.id = 1
 todas_as_sprites = pygame.sprite.Group()
 todas_as_sprites.add(pacMan)
 fantasma = []
 
 pygame.init()
 janela = pygame.display.set_mode((tamanhoTela,tamanhoTela))
+pygame.display.set_caption('Game IA')
 
 def caminhoVazio(target):
     for x in range(len(caminho)):
@@ -63,19 +65,19 @@ def mover(personagem, movimento):
         for f in fantasma:
             if(f.mover == 1):
                 f.mover = 0
-        if(personagem.rect.x < movimento[0][0]*dividir):
+        if(personagem.rect.x < movimento[0][0]*passo):
             personagem.angle = 0
-        if(personagem.rect.x > movimento[0][0]*dividir):
+        if(personagem.rect.x > movimento[0][0]*passo):
             personagem.angle = 180
-        if(personagem.rect.y > movimento[0][1]*dividir):
+        if(personagem.rect.y > movimento[0][1]*passo):
             personagem.angle = -90
-        if(personagem.rect.y > movimento[0][1]*dividir):
+        if(personagem.rect.y > movimento[0][1]*passo):
             personagem.angle = 90
             
         print(personagem.movimento)
         personagem.ini = time.time()
-        personagem.rect.x = movimento[0][0]*dividir
-        personagem.rect.y =  movimento[0][1]*dividir
+        personagem.rect.x = movimento[0][0]*passo
+        personagem.rect.y =  movimento[0][1]*passo
         p = []
         p.append(personagem.rect.x)
         p.append(personagem.rect.y)
@@ -91,12 +93,12 @@ def mover(personagem, movimento):
                     caminho[x][y] = 0
             if(len(fantasma) > 0):
                 for f in fantasma:
-                    caminho[int(f.rect.y/dividir)][int(f.rect.x/dividir)] = -1
+                    caminho[int(f.rect.y/passo)][int(f.rect.x/passo)] = -1
             if(len(comida) > 0):
                 for c in comida:
-                    caminho[int(c.rect.y/dividir)][int(c.rect.x/dividir)] = 3
+                    caminho[int(c.rect.y/passo)][int(c.rect.x/passo)] = 3
 
-            caminho[int(pacMan.rect.y/dividir)][int(pacMan.rect.x/dividir)] = 1
+            caminho[int(pacMan.rect.y/passo)][int(pacMan.rect.x/passo)] = 1
             
             
             if(len(comida) > 0):
@@ -135,8 +137,8 @@ def encosta(personagem,encosta):
 def getCaminho(personagem,pernosagemAtual,pernosagemAlvo):
     movimento = []
     
-    x = int(personagem.rect.x/dividir)
-    y = int(personagem.rect.y/dividir)
+    x = int(personagem.rect.x/passo)
+    y = int(personagem.rect.y/passo)
     caminho[y][x] = pernosagemAtual
     movimento = busca.busca(caminho,[y,x],pernosagemAlvo,x,y,personagem)
     if(movimento == None):
@@ -182,43 +184,43 @@ while True:
             caminho[x][y] = 0
     if(len(fantasma) > 0):
         for f in fantasma:
-            caminho[int(f.rect.y/dividir)][int(f.rect.x/dividir)] = -1
-            f.x = f.rect.y/dividir
-            f.y = f.rect.x/dividir
+            caminho[int(f.rect.y/passo)][int(f.rect.x/passo)] = -1
+            f.x = f.rect.y/passo
+            f.y = f.rect.x/passo
             f.fim= time.time()
     if(len(comida) > 0):
         for c in comida:
-            caminho[int(c.rect.y/dividir)][int(c.rect.x/dividir)] = 3
+            caminho[int(c.rect.y/passo)][int(c.rect.x/passo)] = 3
             c.fim = time.time()
 
-    caminho[int(pacMan.rect.y/dividir)][int(pacMan.rect.x/dividir)] = 1
-    pacMan.x = pacMan.rect.y/dividir
-    pacMan.y = pacMan.rect.x/dividir
+    caminho[int(pacMan.rect.y/passo)][int(pacMan.rect.x/passo)] = 1
+    pacMan.x = pacMan.rect.y/passo
+    pacMan.y = pacMan.rect.x/passo
     pacMan.fim = time.time()
     for event in pygame.event.get():
         teclado = pygame.key.get_pressed()
         if(teclado[pygame.K_LEFT]):
             if(pacMan.rect.x > 0):
-                if(caminho[int(pacMan.rect.y/dividir)][int(pacMan.rect.x/dividir)-1] != -1):
-                    pacMan.esquerda(dividir)
+                if(caminho[int(pacMan.rect.y/passo)][int(pacMan.rect.x/passo)-1] != -1):
+                    pacMan.esquerda(passo)
                     pacMan.angulo(180)
     
         if(teclado[pygame.K_RIGHT]):
-            if(pacMan.rect.x < tamanhoTela-dividir):
-                if(caminho[int(pacMan.rect.y/dividir)][int(pacMan.rect.x/dividir)+1] != -1):
-                    pacMan.direita(dividir)
+            if(pacMan.rect.x < tamanhoTela-passo):
+                if(caminho[int(pacMan.rect.y/passo)][int(pacMan.rect.x/passo)+1] != -1):
+                    pacMan.direita(passo)
                     pacMan.angulo(0)
 
         if(teclado[pygame.K_UP]):
             if(pacMan.rect.y > 0):
-                if(caminho[int(pacMan.rect.y/dividir)-1][int(pacMan.rect.x/dividir)] != -1):
-                    pacMan.cima(dividir)
+                if(caminho[int(pacMan.rect.y/passo)-1][int(pacMan.rect.x/passo)] != -1):
+                    pacMan.cima(passo)
                     pacMan.angulo(90)
 
         if(teclado[pygame.K_DOWN]):
-            if(pacMan.rect.y < tamanhoTela-dividir):
-                if(caminho[int(pacMan.rect.y/dividir)+1][int(pacMan.rect.x/dividir)] != -1):
-                    pacMan.baixo(dividir)
+            if(pacMan.rect.y < tamanhoTela-passo):
+                if(caminho[int(pacMan.rect.y/passo)+1][int(pacMan.rect.x/passo)] != -1):
+                    pacMan.baixo(passo)
                     pacMan.angulo(-90)
 
         if event.type == pygame.QUIT:
@@ -233,12 +235,11 @@ while True:
 
         if(pygame.mouse.get_pressed()[0] == True):
             pos = pygame.mouse.get_pos()
-            xTemp = int(pos[1]/dividir)
-            yTemp = int(pos[0]/dividir)
+            xTemp = int(pos[1]/passo)
+            yTemp = int(pos[0]/passo)
             p = []
-            print(caminho)
-            p.append(yTemp*dividir)
-            p.append(xTemp*dividir)
+            p.append(yTemp*passo)
+            p.append(xTemp*passo)
             if(caminho[xTemp][yTemp] == 0):
                 i = Personagem.Personagem()
                 i.sprite(tamanhoTela,spriteIninimigo)
@@ -248,8 +249,8 @@ while True:
                 fantasma[len(fantasma)-1].caminhar = True
                 fantasma[len(fantasma)-1].y = yTemp
                 fantasma[len(fantasma)-1].velocidade = 1
-                fantasma[len(fantasma)-1].rect.y = xTemp*dividir
-                fantasma[len(fantasma)-1].rect.x = yTemp*dividir
+                fantasma[len(fantasma)-1].rect.y = xTemp*passo
+                fantasma[len(fantasma)-1].rect.x = yTemp*passo
                 todas_as_sprites.add(fantasma[len(fantasma)-1])
             else:
                 i = 0
@@ -263,17 +264,17 @@ while True:
                 
         if(pygame.mouse.get_pressed()[2] == True):
             pos = pygame.mouse.get_pos()
-            xTemp = int(pos[1]/dividir)
-            yTemp = int(pos[0]/dividir)
+            xTemp = int(pos[1]/passo)
+            yTemp = int(pos[0]/passo)
             p = []
-            p.append(yTemp*dividir)
-            p.append(xTemp*dividir)
+            p.append(yTemp*passo)
+            p.append(xTemp*passo)
             if(caminho[xTemp][yTemp] == 0):
                 c = Personagem.Personagem()
                 c.sprite(tamanhoTela,spriteComida)
                 comida.append(c)
-                comida[len(comida)-1].rect.y = xTemp*dividir
-                comida[len(comida)-1].rect.x = yTemp*dividir
+                comida[len(comida)-1].rect.y = xTemp*passo
+                comida[len(comida)-1].rect.x = yTemp*passo
                 todas_as_sprites.add(comida[len(comida)-1])
                 
             else:
@@ -289,11 +290,11 @@ while True:
         if(pygame.mouse.get_pressed()[1] == True):
             
             pos = pygame.mouse.get_pos()
-            xTemp = int(pos[1]/dividir)
-            yTemp = int(pos[0]/dividir)
+            xTemp = int(pos[1]/passo)
+            yTemp = int(pos[0]/passo)
             p = []
-            p.append(yTemp*dividir)
-            p.append(xTemp*dividir)
+            p.append(yTemp*passo)
+            p.append(xTemp*passo)
             
             if(caminho[xTemp][yTemp] == -1):
                 i = 0

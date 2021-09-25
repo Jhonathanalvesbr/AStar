@@ -2,6 +2,8 @@ import math
 import Estado
 import random
 
+qntPassos = 0
+
 def inserir(lista, aux):
     j = 0
     while(len(lista) > 0 and j < len(lista) and aux.f >= lista[j].f):
@@ -18,8 +20,19 @@ def existe(lista, filho):
             return 1
     return -1
 
-def custo(x, y, desX, desY):
-    return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))
+def custoH(x, y, desX, desY,g):
+    dx = (x - desX)
+    dy = (y - desY)
+    #return abs(max(dx,dy)) #A quantidade de nós gerados foram: 58  - Custo total: 18
+    #return abs(min(dx,dy))  #A quantidade de nós gerados foram: 125 - Custo total: 18
+    #return (dx*dy) + (dy*dy)  #A quantidade de nós gerados foram: 170 - Custo total: 32
+    #return math.sqrt(dx*dx + dy*dy)  # A quantidade de nós gerados foram: 102 - Custo total: 23
+    #return (dx + dy)  #A quantidade de nós gerados foram: 270 - Custo total: 19
+    #return abs(dx) + abs(dy) #A quantidade de nós gerados foram: 94 - Custo total: 23
+    #return abs(x - desX) + abs(y - desY)  #A quantidade de nós gerados foram: 94 - Custo total: 23
+    #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))  #A quantidade de nós gerados foram: 102 - Custo total: 23
+    
+    #return g+math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))
 
 def criaEstado(self, iniX, iniY):
     # Baixo
@@ -177,6 +190,7 @@ class Astar():
         return [indice1,indice2]
 
     def busca(self, c, posicaoPersonagemXY, target, posicaoX, posicaoY, personagem):
+        global qntPassos
         caminho = c[:]
         iniX = posicaoPersonagemXY[0]
         iniY = posicaoPersonagemXY[1]
@@ -223,13 +237,21 @@ class Astar():
             if(w != -1):
                 #print("Win")
                 w.parente = pai
-                return getCaminho(w)
+                getCamin = getCaminho(w)
+                qntPassos += 1
+                if(personagem.id == 1):
+                    print("A quantidade de nós gerados foram: " + str(qntPassos))
+                    print("Custo total: " + str(len(getCamin)))
+                qntPassos = 0
+
+                return getCamin
             for i in range(8):
                 filho = self.criarNo(pai, i)
                 if(filho != None and existe(listaAberta, filho) != 1 and existe(listaFechada, filho) != 1):
+                    qntPassos += 1
                     filho.g = pai.g + 1.0
-                    filho.h = custo(filho.x, filho.y, personagem.desX, personagem.desY)
-                    filho.f = filho.g + filho.h
+                    filho.f = custoH(filho.x, filho.y, personagem.desX, personagem.desY, filho.g)
+                    #filho.f = filho.g + filho.h
                     filho.parente = pai
                     inserir(listaAberta, filho)
 

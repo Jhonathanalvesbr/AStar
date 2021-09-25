@@ -23,6 +23,7 @@ class Personagem(pygame.sprite.Sprite):
         self.caminhar = False
         self.desX = None
         self.desY = None
+        self.id = 0
         
         for i in range(len(self.sprites)):
             self.image = self.sprites[i]
