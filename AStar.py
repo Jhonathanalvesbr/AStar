@@ -20,9 +20,10 @@ def existe(lista, filho):
             return 1
     return -1
 
-def custoH(x, y, desX, desY,g):
+def custoH(x, y, desX, desY, g):
     dx = (x - desX)
     dy = (y - desY)
+    return g+abs(dx)+abs(dy)
     #return abs(max(dx,dy)) #A quantidade de nós gerados foram: 58  - Custo total: 18
     #return abs(min(dx,dy))  #A quantidade de nós gerados foram: 125 - Custo total: 18
     #return (dx*dy) + (dy*dy)  #A quantidade de nós gerados foram: 170 - Custo total: 32
@@ -219,8 +220,8 @@ class Astar():
         if(personagem.caminhar == True):
             caminho[personagem.desX][personagem.desY] = -2
             target  = -2
-        print(personagem.desX)
-        print(personagem.desY)
+        #print(personagem.desX)
+        #print(personagem.desY)
         print("============")
         if(personagem.desX == None):
             return None
