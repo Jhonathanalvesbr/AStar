@@ -245,7 +245,7 @@ while True:
                 i.sprite(tamanhoTela,spriteIninimigo)
                 fantasma.append(i)
                 fantasma[len(fantasma)-1].x = xTemp
-                fantasma[len(fantasma)-1].tamanho = 6
+                fantasma[len(fantasma)-1].tamanho = 8
                 fantasma[len(fantasma)-1].caminhar = True
                 fantasma[len(fantasma)-1].y = yTemp
                 fantasma[len(fantasma)-1].velocidade = 1

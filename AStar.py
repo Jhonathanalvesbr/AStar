@@ -199,15 +199,19 @@ class Astar():
             personagem.desX = None
         xx = self.buscaIndices(posicaoX,personagem.tamanho)
         yy = self.buscaIndices(posicaoY,personagem.tamanho)
+    
+        e = 0
+
         for x in range(xx[0],xx[1]):
             for y in range(yy[0],yy[1]):
                 print(caminho[x][y], end="")
                 if(caminho[x][y] == target):
                     personagem.desX = x
                     personagem.desY = y
+                    e = 1
             print("")
         
-        if(personagem.caminhar == True and personagem.desX == None):
+        if(e == 0 and personagem.caminhar == True and personagem.desX == None):
             xTemp = random.randint(xx[0],xx[1])
             yTemp = random.randint(yy[0],yy[1])
             if(xTemp == self.tamanho):
@@ -217,6 +221,7 @@ class Astar():
 
             personagem.desX = xTemp
             personagem.desY = yTemp
+
         if(personagem.caminhar == True):
             caminho[personagem.desX][personagem.desY] = -2
             target  = -2
