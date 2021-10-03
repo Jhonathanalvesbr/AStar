@@ -157,6 +157,7 @@ caminho[5][6] = -1
 caminho[6][6] = -1
 
 
+
 while True:
 
     for x in range(len(caminho)):
@@ -276,6 +277,7 @@ while True:
             p.append(yTemp*passo)
             p.append(xTemp*passo)
             if(caminho[xTemp][yTemp] == 0):
+                print("caminho[" + str(xTemp) + "][" + str(yTemp) + "] = -1")
                 i = Personagem.Personagem()
                 i.sprite(tamanhoTela,spriteIninimigo)
                 fantasma.append(i)
@@ -292,6 +294,7 @@ while True:
                 while i < len(fantasma):
                     if(fantasma[i].rect.collidepoint(p)):
                         if(isinstance(fantasma[i], Personagem.Personagem)):
+                            caminho[xTemp][yTemp] = 0
                             todas_as_sprites.remove(fantasma[i])
                             fantasma.pop(i)
                             break
