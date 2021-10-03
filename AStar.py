@@ -1,6 +1,8 @@
 import math
 import Estado
 import random
+from scipy.spatial.distance import cdist
+from scipy.spatial import distance
 
 qntPassos = 0
 
@@ -21,11 +23,16 @@ def existe(lista, filho):
     return -1
 
 def custoH(x, y, desX, desY, g):
-    dx = (x - desX)
-    dy = (y - desY)
-    
+    dx = abs (x-desX)
+    dy = abs (y-desX)
+    a = [x,y]
+    b = [desX, desY]
+    #return g
+    #return distance.euclidean(a, b)+g
+    #return g * (dx * dx + dy * dy)
+    #return sum(abs(val1-val2)-g for val1, val2 in zip(a,b)) #manhattan
     #return abs(max(dx,dy)) #A quantidade de nós gerados foram: 58  - Custo total: 18
-    #return abs(min(dx,dy))  #A quantidade de nós gerados foram: 125 - Custo total: 18
+     #A quantidade de nós gerados foram: 125 - Custo total: 18
     #return (dx*dy) + (dy*dy)  #A quantidade de nós gerados foram: 170 - Custo total: 32
     #return math.sqrt(dx*dx + dy*dy)  # A quantidade de nós gerados foram: 102 - Custo total: 23
     #return (dx + dy)  #A quantidade de nós gerados foram: 270 - Custo total: 19
@@ -34,8 +41,10 @@ def custoH(x, y, desX, desY, g):
     #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))  #A quantidade de nós gerados foram: 102 - Custo total: 23
     #return abs(dx)+abs(dy)
 
-    
-    return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))-g
+    #return -1
+    #return abs(min(dx,dy))
+    #return abs(x-desX) + abs(y-desY)+g #Manhattan
+    #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
 
 def criaEstado(self, iniX, iniY):
     # Baixo
@@ -206,12 +215,12 @@ class Astar():
 
         for x in range(xx[0],xx[1]):
             for y in range(yy[0],yy[1]):
-                print(caminho[x][y], end="")
+                #print(caminho[x][y], end="")
                 if(caminho[x][y] == target):
                     personagem.desX = x
                     personagem.desY = y
                     e = 1
-            print("")
+            #print("")
         
         if(e == 0 and personagem.caminhar == True and personagem.desX == None):
             xTemp = random.randint(xx[0],xx[1])
@@ -258,9 +267,9 @@ class Astar():
                 if(filho != None and existe(listaAberta, filho) != 1 and existe(listaFechada, filho) != 1):
                     qntPassos += 1
                     filho.g = pai.g + 1.0
-                    print(filho.g)
                     filho.f = custoH(filho.x, filho.y, personagem.desX, personagem.desY, filho.g)
                     #filho.f = filho.g + filho.h
+                    #print(filho.f)
                     filho.parente = pai
                     inserir(listaAberta, filho)
 
