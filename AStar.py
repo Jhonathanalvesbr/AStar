@@ -41,10 +41,10 @@ def custoH(x, y, desX, desY, g):
     #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))  #A quantidade de nós gerados foram: 102 - Custo total: 23
     #return abs(dx)+abs(dy)
 
-    #return -1
-    return abs(min(dx,dy))
+    #return -1 #Busca Gulosa 
+    #return abs(min(dx,dy))
     #return abs(x-desX) + abs(y-desY)+g #Manhattan
-    #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
+    return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
 
 def criaEstado(self, iniX, iniY):
     # Baixo
