@@ -148,7 +148,41 @@ def getCaminho(personagem,pernosagemAtual,pernosagemAlvo):
     caminho[x][y] = 0
     return movimento
 
+
+caminho[1][6] = -1
+caminho[2][6] = -1
+caminho[3][6] = -1
+caminho[4][6] = -1
+caminho[5][6] = -1
+caminho[6][6] = -1
+
+
 while True:
+
+    for x in range(len(caminho)):
+        for y in range(len(caminho)):
+            if(caminho[x][y] == -1):
+                e = -1
+                for f in fantasma:
+                    if(f.x == x and f.y == y):
+                        e = 1
+                        break
+                if(e == -1):
+                    i = Personagem.Personagem()
+                    i.sprite(tamanhoTela,spriteIninimigo)
+                    fantasma.append(i)
+                    fantasma[len(fantasma)-1].x = x
+                    fantasma[len(fantasma)-1].tamanho = 8
+                    fantasma[len(fantasma)-1].caminhar = True
+                    fantasma[len(fantasma)-1].y = y
+                    fantasma[len(fantasma)-1].velocidade = 1
+                    fantasma[len(fantasma)-1].rect.y = x*passo
+                    fantasma[len(fantasma)-1].rect.x = y*passo
+                    todas_as_sprites.add(fantasma[len(fantasma)-1])
+
+
+
+
     if(len(fantasma) > 0):
         for f in fantasma:
             if(f.mover == 0 and f.seguir == True):

@@ -42,7 +42,7 @@ def custoH(x, y, desX, desY, g):
     #return abs(dx)+abs(dy)
 
     #return -1
-    #return abs(min(dx,dy))
+    return abs(min(dx,dy))
     #return abs(x-desX) + abs(y-desY)+g #Manhattan
     #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
 
