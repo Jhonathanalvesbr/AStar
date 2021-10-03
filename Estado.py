@@ -5,7 +5,7 @@ class Estado():
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.g = math.inf
-        self.h = math.inf
-        self.f = math.inf
+        self.g = 0
+        self.h = 0
+        self.f = 0
         
