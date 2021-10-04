@@ -29,7 +29,7 @@ def custoH(x, y, desX, desY, g):
     b = [desX, desY]
     f = abs(x-desX) + abs(y-desY)+g 
     h = abs(x-desX) + abs(y-desY)
-    print("Caminho[" + str(x) + "]["+ str(y) + "] F(n): " + str(f) + " --G(n): " + str(g) + " H(n): " + str(h))
+    print("Caminho[" + str(x) + "]["+ str(y) + "] -- F(n): " + str(f) + " -- G(n): " + str(g) + " -- H(n): " + str(h))
     #return g
     #return distance.euclidean(a, b)+g
     #return g * (dx * dx + dy * dy)
