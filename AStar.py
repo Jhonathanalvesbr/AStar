@@ -3,15 +3,19 @@ import Estado
 import random
 from scipy.spatial.distance import cdist
 from scipy.spatial import distance
+from bisect import insort
 
 qntPassos = 0
 
 def inserir(lista, aux):
-    j = 0
-    while(len(lista) > 0 and j < len(lista) and aux.f >= lista[j].f):
-        j += 1
-    lista.insert(j, aux)
 
+    j = 0
+    while(len(lista) > 0 and j < len(lista) and aux.f > lista[j].f):
+        #print(lista[j].f)
+        j += 1
+    #print("==========")
+    lista.insert(j, aux)
+    
     return lista
 
 def existe(lista, filho):
@@ -50,8 +54,8 @@ def custoH(x, y, desX, desY, g):
     #return -1
     #return abs(min(dx,dy))
     #return g #Profundidade
-    return abs(x-desX) + abs(y-desY)+g #Manhattan
-    #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
+    #return abs(x-desX) + abs(y-desY)+g #Manhattan
+    return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
 
 def criaEstado(self, iniX, iniY):
     # Baixo
@@ -272,7 +276,7 @@ class Astar():
                 getCamin = getCaminho(w)
                 qntPassos += 1
                 if(personagem.id == 1):
-                    custoH(w.x, w.y, personagem.desX, personagem.desY, filho.g)
+                    #custoH(w.x, w.y, personagem.desX, personagem.desY, filho.g)
                     #print("Caminho[" + str(w.x) + "]["+ str(w.y) + "] -- F(n): " + str(w.f) + " -- G(n): " + str(w.g) + " -- H(n): " + str(w.h))
                     print("A quantidade de nós gerados foram: " + str(qntPassos))
                     print("Custo total: " + str(len(getCamin)))
