@@ -27,6 +27,8 @@ def custoH(x, y, desX, desY, g):
     dy = abs (y-desX)
     a = [x,y]
     b = [desX, desY]
+
+    
     f = abs(x-desX) + abs(y-desY)+g 
     h = abs(x-desX) + abs(y-desY)
     print("Caminho[" + str(x) + "]["+ str(y) + "] -- F(n): " + str(f) + " -- G(n): " + str(g) + " -- H(n): " + str(h))
