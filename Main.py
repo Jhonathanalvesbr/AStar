@@ -11,7 +11,7 @@ targetPacMan = 1
 targetFantasma = -1
 targetComida = 3
 tamanhoTela = 600
-passo = 25
+passo = 100
 tamanho = int(tamanhoTela/passo)
 caminho = []
 movimentoPacMan = []
@@ -146,16 +146,6 @@ def getCaminho(personagem,pernosagemAtual,pernosagemAlvo):
     #print(movimento)
     caminho[y][x] = 0
     return movimento
-
-
-
-caminho[1][6] = -1
-caminho[2][6] = -1
-caminho[3][6] = -1
-caminho[4][6] = -1
-caminho[5][6] = -1
-caminho[6][6] = -1
-
 
 
 while True:

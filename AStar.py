@@ -29,13 +29,13 @@ def custoH(x, y, desX, desY, g):
     b = [desX, desY]
     f = abs(x-desX) + abs(y-desY)+g 
     h = abs(x-desX) + abs(y-desY)
-    #print("Caminho[" + str(x) + "]["+ str(y) + "] F(n): " + str(f) + " --G(n): " + str(g) + " H(n): " + str(h))
+    print("Caminho[" + str(x) + "]["+ str(y) + "] F(n): " + str(f) + " --G(n): " + str(g) + " H(n): " + str(h))
     #return g
     #return distance.euclidean(a, b)+g
     #return g * (dx * dx + dy * dy)
     #return sum(abs(val1-val2)-g for val1, val2 in zip(a,b)) #manhattan
     #return abs(max(dx,dy)) #A quantidade de nós gerados foram: 58  - Custo total: 18
-     #A quantidade de nós gerados foram: 125 - Custo total: 18
+    #A quantidade de nós gerados foram: 125 - Custo total: 18
     #return (dx*dy) + (dy*dy)  #A quantidade de nós gerados foram: 170 - Custo total: 32
     #return math.sqrt(dx*dx + dy*dy)  # A quantidade de nós gerados foram: 102 - Custo total: 23
     #return (dx + dy)  #A quantidade de nós gerados foram: 270 - Custo total: 19
@@ -46,6 +46,7 @@ def custoH(x, y, desX, desY, g):
 
     #return -1
     #return abs(min(dx,dy))
+    #return g #Profundidade
     return abs(x-desX) + abs(y-desY)+g #Manhattan
     #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
 
