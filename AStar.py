@@ -27,6 +27,9 @@ def custoH(x, y, desX, desY, g):
     dy = abs (y-desX)
     a = [x,y]
     b = [desX, desY]
+    f = abs(x-desX) + abs(y-desY)+g 
+    h = abs(x-desX) + abs(y-desY)
+    #print("Caminho[" + str(x) + "]["+ str(y) + "] F(n): " + str(f) + " --G(n): " + str(g) + " H(n): " + str(h))
     #return g
     #return distance.euclidean(a, b)+g
     #return g * (dx * dx + dy * dy)
@@ -41,10 +44,10 @@ def custoH(x, y, desX, desY, g):
     #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))  #A quantidade de nós gerados foram: 102 - Custo total: 23
     #return abs(dx)+abs(dy)
 
-    #return -1 #Busca Gulosa 
+    #return -1
     #return abs(min(dx,dy))
-    #return abs(x-desX) + abs(y-desY)+g #Manhattan
-    return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
+    return abs(x-desX) + abs(y-desY)+g #Manhattan
+    #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
 
 def criaEstado(self, iniX, iniY):
     # Baixo

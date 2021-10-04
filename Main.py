@@ -24,7 +24,6 @@ for y in range(tamanho):
         linha.append(0)
     caminho.append(linha)
 
-
 spriteIninimigo = []
 spritePacMan = []
 spriteComida = []
@@ -75,7 +74,7 @@ def mover(personagem, movimento):
         if(personagem.rect.y > movimento[0][1]*passo):
             personagem.angle = 90
             
-        #print(personagem.movimento)
+        print(personagem.movimento)
         personagem.ini = time.time()
         personagem.rect.x = movimento[0][0]*passo
         personagem.rect.y =  movimento[0][1]*passo
@@ -140,13 +139,14 @@ def getCaminho(personagem,pernosagemAtual,pernosagemAlvo):
     
     x = int(personagem.rect.x/passo)
     y = int(personagem.rect.y/passo)
-    caminho[x][y] = pernosagemAtual
-    movimento = busca.busca(caminho,[x,y],pernosagemAlvo,x,y,personagem)
+    caminho[y][x] = pernosagemAtual
+    movimento = busca.busca(caminho,[y,x],pernosagemAlvo,x,y,personagem)
     if(movimento == None):
         return None
     #print(movimento)
-    caminho[x][y] = 0
+    caminho[y][x] = 0
     return movimento
+
 
 
 caminho[1][6] = -1
@@ -277,7 +277,6 @@ while True:
             p.append(yTemp*passo)
             p.append(xTemp*passo)
             if(caminho[xTemp][yTemp] == 0):
-                print("caminho[" + str(xTemp) + "][" + str(yTemp) + "] = -1")
                 i = Personagem.Personagem()
                 i.sprite(tamanhoTela,spriteIninimigo)
                 fantasma.append(i)
