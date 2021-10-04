@@ -131,8 +131,24 @@ class Astar():
         elif(iniX >= 0 and iniY-1 >= 0 and iniX < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX][iniY-1] == 0 and i == 3):
             # print("Esquerda")
             return (Estado.Estado(iniX, iniY-1))
-    
-        
+        # 135
+        '''
+        elif(iniX+1 >= 0 and iniY+1 >= 0 and iniX+1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX+1][iniY+1] == 0 and i == 4):
+            # print("135")
+            return (Estado.Estado(iniX+1, iniY+1))
+        # 225
+        elif(iniX+1 >= 0 and iniY-1 >= 0 and iniX+1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX+1][iniY-1] == 0 and i == 5):
+            # print("225")
+            return (Estado.Estado(iniX+1, iniY-1))
+        # 315
+        elif(iniX-1 >= 0 and iniY-1 >= 0 and iniX-1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX-1][iniY-1] == 0 and i == 6):
+            # print("315")
+            return (Estado.Estado(iniX-1, iniY-1))
+        # 45
+        elif(iniX-1 >= 0 and iniY+1 >= 0 and iniX-1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX-1][iniY+1] == 0 and i == 7):
+            # print("45")
+            return (Estado.Estado(iniX-1, iniY+1))
+        '''
 
     def win(self, e, target):
         if(e == -1):
@@ -155,9 +171,26 @@ class Astar():
         elif(iniX >= 0 and iniY-1 >= 0 and iniX < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX][iniY-1] == target):
             # print("Esquerda")
             return Estado.Estado(iniX, iniY-1)
-        
+        # 135
+        '''
+        elif(iniX+1 >= 0 and iniY+1 >= 0 and iniX+1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX+1][iniY+1] == target):
+            # print("135")
+            return Estado.Estado(iniX+1, iniY+1)
+        # 225
+        elif(iniX+1 >= 0 and iniY-1 >= 0 and iniX+1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX+1][iniY-1] == target):
+            # print("225")
+            return Estado.Estado(iniX+1, iniY-1)
+        # 315
+        elif(iniX-1 >= 0 and iniY-1 >= 0 and iniX-1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX-1][iniY-1] == target):
+            # print("315")
+            return Estado.Estado(iniX-1, iniY-1)
+        # 45
+        elif(iniX-1 >= 0 and iniY+1 >= 0 and iniX-1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX-1][iniY+1] == target):
+            # print("45")
+            return Estado.Estado(iniX-1, iniY+1)
         else:
             return -1
+            '''
 
     def imprimir(self, caminho):
         self.caminho = self.caminho
@@ -237,16 +270,16 @@ class Astar():
         listaAberta = []
         listaFechada = []
         self.caminho = caminho
-        listaAberta.append(Estado.Estado(posicaoPersonagemXY[0], posicaoPersonagemXY[1]))
+        listaAberta.append(Estado.Estado(iniX, iniY))
 
         while(len(listaAberta) > 0):
             pai = listaAberta[0]
             listaFechada.append(pai)
             listaAberta.pop(0)
             w = self.win(pai,target)
-            if(w != -1):
-                #for i in listaAberta:
-                #    print(i.f)
+            if(w != None):
+                for i in listaAberta:
+                    print(i.f)
                 #print("Win")
                 w.parente = pai
                 getCamin = getCaminho(w)
