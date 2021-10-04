@@ -278,8 +278,8 @@ class Astar():
             listaAberta.pop(0)
             w = self.win(pai,target)
             if(w != None):
-                for i in listaAberta:
-                    print(i.f)
+                #for i in listaAberta:
+                #    print(i.f)
                 #print("Win")
                 w.parente = pai
                 getCamin = getCaminho(w)
