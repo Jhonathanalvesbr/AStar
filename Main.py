@@ -74,7 +74,7 @@ def mover(personagem, movimento):
         if(personagem.rect.y > movimento[0][1]*passo):
             personagem.angle = 90
             
-        print(personagem.movimento)
+        #print(personagem.movimento)
         personagem.ini = time.time()
         personagem.rect.x = movimento[0][0]*passo
         personagem.rect.y =  movimento[0][1]*passo

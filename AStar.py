@@ -241,7 +241,7 @@ class Astar():
             target  = -2
         #print(personagem.desX)
         #print(personagem.desY)
-        print("============")
+        #print("============")
         if(personagem.desX == None):
             return None
         
