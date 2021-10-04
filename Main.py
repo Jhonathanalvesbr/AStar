@@ -11,7 +11,7 @@ targetPacMan = 1
 targetFantasma = -1
 targetComida = 3
 tamanhoTela = 600
-passo = 100
+passo = 25
 tamanho = int(tamanhoTela/passo)
 caminho = []
 movimentoPacMan = []
@@ -33,6 +33,10 @@ spritePacMan.append(pygame.image.load('1.png'))
 spritePacMan.append(pygame.image.load('2.png'))
 spritePacMan.append(pygame.image.load('3.png'))
 spriteIninimigo.append(pygame.image.load('f1.png'))
+spriteIninimigo.append(pygame.image.load('f1L.png'))
+spriteIninimigo.append(pygame.image.load('f1R.png'))
+spriteIninimigo.append(pygame.image.load('f1up.png'))
+spriteIninimigo.append(pygame.image.load('f1down.png'))
 spriteComida.append(pygame.image.load('c1.png'))
 pacMan = Personagem.Personagem()
 pacMan.sprite(tamanhoTela,spritePacMan)
@@ -65,14 +69,29 @@ def mover(personagem, movimento):
         for f in fantasma:
             if(f.mover == 1):
                 f.mover = 0
-        if(personagem.rect.x < movimento[0][0]*passo):
-            personagem.angle = 0
-        if(personagem.rect.x > movimento[0][0]*passo):
-            personagem.angle = 180
-        if(personagem.rect.y > movimento[0][1]*passo):
-            personagem.angle = -90
-        if(personagem.rect.y > movimento[0][1]*passo):
-            personagem.angle = 90
+        if(personagem.id != -1):
+            if(personagem.rect.x < movimento[0][0]*passo):
+                personagem.angle = 0
+            if(personagem.rect.x > movimento[0][0]*passo):
+                personagem.angle = 180
+            if(personagem.rect.y > movimento[0][1]*passo):
+                personagem.angle = -90
+            if(personagem.rect.y > movimento[0][1]*passo):
+                personagem.angle = 90
+        elif(personagem.id == -1 and personagem.seguir == True):
+            if(personagem.rect.x < movimento[0][0]*passo):
+                personagem.angle = 0
+                personagem.image = personagem.sprites[2]
+            if(personagem.rect.x > movimento[0][0]*passo):
+                personagem.angle = 0
+                personagem.image = personagem.sprites[1]
+            if(personagem.rect.y > movimento[0][1]*passo):
+                personagem.angle = 0
+                personagem.image = personagem.sprites[4]
+            if(personagem.rect.y > movimento[0][1]*passo):
+                personagem.angle = 0
+                personagem.image = personagem.sprites[3]
+
             
         #print(personagem.movimento)
         personagem.ini = time.time()
@@ -170,6 +189,7 @@ while True:
                     fantasma[len(fantasma)-1].velocidade = 1
                     fantasma[len(fantasma)-1].rect.y = x*passo
                     fantasma[len(fantasma)-1].rect.x = y*passo
+                    fantasma[len(fantasma)-1].id = -1
                     todas_as_sprites.add(fantasma[len(fantasma)-1])
 
 
@@ -278,6 +298,7 @@ while True:
                 fantasma[len(fantasma)-1].velocidade = 1
                 fantasma[len(fantasma)-1].rect.y = xTemp*passo
                 fantasma[len(fantasma)-1].rect.x = yTemp*passo
+                fantasma[len(fantasma)-1].id = -1
                 todas_as_sprites.add(fantasma[len(fantasma)-1])
             else:
                 i = 0

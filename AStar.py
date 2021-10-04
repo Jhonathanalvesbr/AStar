@@ -32,7 +32,7 @@ def custoH(x, y, desX, desY, g):
     f = abs(x-desX) + abs(y-desY)+g 
     h = abs(x-desX) + abs(y-desY)
     
-    print("Caminho[" + str(x) + "]["+ str(y) + "] -- F(n): " + str(f) + " -- G(n): " + str(g) + " -- H(n): " + str(h))
+    #print("Caminho[" + str(x) + "]["+ str(y) + "] -- F(n): " + str(f) + " -- G(n): " + str(g) + " -- H(n): " + str(h))
     #return g
     #return distance.euclidean(a, b)+g
     #return g * (dx * dx + dy * dy)
@@ -227,9 +227,14 @@ class Astar():
                     personagem.desX = x
                     personagem.desY = y
                     e = 1
+                    personagem.find = 1
+                    break
+
+
             #print("")
         
         if(e == 0 and personagem.caminhar == True and personagem.desX == None):
+            personagem.find = -1
             xTemp = random.randint(xx[0],xx[1])
             yTemp = random.randint(yy[0],yy[1])
             if(xTemp == self.tamanho):
@@ -243,6 +248,8 @@ class Astar():
         if(personagem.caminhar == True):
             caminho[personagem.desX][personagem.desY] = -2
             target  = -2
+
+
         #print(personagem.desX)
         #print(personagem.desY)
         #print("============")
