@@ -148,6 +148,7 @@ def getCaminho(personagem,pernosagemAtual,pernosagemAlvo):
     return movimento
 
 
+
 while True:
 
     for x in range(len(caminho)):

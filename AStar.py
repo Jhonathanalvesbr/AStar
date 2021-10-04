@@ -28,9 +28,10 @@ def custoH(x, y, desX, desY, g):
     a = [x,y]
     b = [desX, desY]
 
-    
+
     f = abs(x-desX) + abs(y-desY)+g 
     h = abs(x-desX) + abs(y-desY)
+    
     print("Caminho[" + str(x) + "]["+ str(y) + "] -- F(n): " + str(f) + " -- G(n): " + str(g) + " -- H(n): " + str(h))
     #return g
     #return distance.euclidean(a, b)+g
@@ -252,6 +253,8 @@ class Astar():
         listaFechada = []
         self.caminho = caminho
         listaAberta.append(Estado.Estado(iniX, iniY))
+        listaAberta[0].g = -1
+
         while(len(listaAberta) > 0):
             pai = listaAberta[0]
             listaFechada.append(pai)
