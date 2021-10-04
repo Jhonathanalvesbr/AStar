@@ -26,17 +26,17 @@ def existe(lista, filho):
             return 1
     return -1
 
-def custoH(x, y, desX, desY, g):
+def custoH(x, y, desX, desY,g):
     dx = abs (x-desX)
     dy = abs (y-desX)
     a = [x,y]
     b = [desX, desY]
 
 
-    f = abs(x-desX) + abs(y-desY)+g 
+    f = abs(x-desX) + abs(y-desY)
     h = abs(x-desX) + abs(y-desY)
     
-    #print("Caminho[" + str(x) + "]["+ str(y) + "] -- F(n): " + str(f) + " -- G(n): " + str(g) + " -- H(n): " + str(h))
+    #print("Caminho[" + str(x) + "]["+ str(y) + "] -- F(n): " + str(f+g) + " -- G(n): " + str(g) + " -- H(n): " + str(h))
     #return g
     #return distance.euclidean(a, b)+g
     #return g * (dx * dx + dy * dy)
@@ -54,7 +54,7 @@ def custoH(x, y, desX, desY, g):
     #return -1
     #return abs(min(dx,dy))
     #return g #Profundidade
-    return abs(x-desX) + abs(y-desY)+g #Manhattan
+    return abs(x-desX) + abs(y-desY) #Manhattan
     #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
 
 def criaEstado(self, iniX, iniY):
@@ -75,9 +75,8 @@ def criaEstado(self, iniX, iniY):
         # print("Esquerda")
         return Estado.Estado(iniX, iniY-1)
         # 135
-    else:
-        return -1
-    '''
+    
+    
     elif(iniX+1 >= 0 and iniY+1 >= 0 and iniX+1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX+1][iniY+1] == 0):
         # print("135")
         return Estado.Estado(iniX+1, iniY+1)
@@ -93,7 +92,8 @@ def criaEstado(self, iniX, iniY):
     elif(iniX-1 >= 0 and iniY+1 >= 0 and iniX-1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX-1][iniY+1] == 0):
         # print("45")
         return Estado.Estado(iniX-1, iniY+1)
-    '''
+    else:
+        return -1
     
 
 def getCaminho(filho):
@@ -131,24 +131,8 @@ class Astar():
         elif(iniX >= 0 and iniY-1 >= 0 and iniX < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX][iniY-1] == 0 and i == 3):
             # print("Esquerda")
             return (Estado.Estado(iniX, iniY-1))
-        # 135
-        '''
-        elif(iniX+1 >= 0 and iniY+1 >= 0 and iniX+1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX+1][iniY+1] == 0 and i == 4):
-            # print("135")
-            return (Estado.Estado(iniX+1, iniY+1))
-        # 225
-        elif(iniX+1 >= 0 and iniY-1 >= 0 and iniX+1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX+1][iniY-1] == 0 and i == 5):
-            # print("225")
-            return (Estado.Estado(iniX+1, iniY-1))
-        # 315
-        elif(iniX-1 >= 0 and iniY-1 >= 0 and iniX-1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX-1][iniY-1] == 0 and i == 6):
-            # print("315")
-            return (Estado.Estado(iniX-1, iniY-1))
-        # 45
-        elif(iniX-1 >= 0 and iniY+1 >= 0 and iniX-1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX-1][iniY+1] == 0 and i == 7):
-            # print("45")
-            return (Estado.Estado(iniX-1, iniY+1))
-        '''
+    
+        
 
     def win(self, e, target):
         if(e == -1):
@@ -171,22 +155,7 @@ class Astar():
         elif(iniX >= 0 and iniY-1 >= 0 and iniX < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX][iniY-1] == target):
             # print("Esquerda")
             return Estado.Estado(iniX, iniY-1)
-        # 135
-        elif(iniX+1 >= 0 and iniY+1 >= 0 and iniX+1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX+1][iniY+1] == target):
-            # print("135")
-            return Estado.Estado(iniX+1, iniY+1)
-        # 225
-        elif(iniX+1 >= 0 and iniY-1 >= 0 and iniX+1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX+1][iniY-1] == target):
-            # print("225")
-            return Estado.Estado(iniX+1, iniY-1)
-        # 315
-        elif(iniX-1 >= 0 and iniY-1 >= 0 and iniX-1 < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX-1][iniY-1] == target):
-            # print("315")
-            return Estado.Estado(iniX-1, iniY-1)
-        # 45
-        elif(iniX-1 >= 0 and iniY+1 >= 0 and iniX-1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX-1][iniY+1] == target):
-            # print("45")
-            return Estado.Estado(iniX-1, iniY+1)
+        
         else:
             return -1
 
@@ -268,7 +237,7 @@ class Astar():
         listaAberta = []
         listaFechada = []
         self.caminho = caminho
-        listaAberta.append(Estado.Estado(iniX, iniY))
+        listaAberta.append(Estado.Estado(posicaoPersonagemXY[0], posicaoPersonagemXY[1]))
 
         while(len(listaAberta) > 0):
             pai = listaAberta[0]
@@ -276,6 +245,8 @@ class Astar():
             listaAberta.pop(0)
             w = self.win(pai,target)
             if(w != -1):
+                #for i in listaAberta:
+                #    print(i.f)
                 #print("Win")
                 w.parente = pai
                 getCamin = getCaminho(w)
@@ -293,8 +264,8 @@ class Astar():
                 if(filho != None and existe(listaAberta, filho) != 1 and existe(listaFechada, filho) != 1):
                     qntPassos += 1
                     filho.g = pai.g + 1.0
-                    filho.f = custoH(filho.x, filho.y, personagem.desX, personagem.desY, filho.g)
-                    #filho.f = filho.g + filho.h
+                    filho.h = custoH(filho.x, filho.y, personagem.desX, personagem.desY,filho.g)
+                    filho.f = filho.h+filho.g
                     #print(filho.f)
                     filho.parente = pai
                     inserir(listaAberta, filho)
