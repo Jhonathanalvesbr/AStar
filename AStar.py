@@ -253,7 +253,6 @@ class Astar():
         listaFechada = []
         self.caminho = caminho
         listaAberta.append(Estado.Estado(iniX, iniY))
-        listaAberta[0].g = -1
 
         while(len(listaAberta) > 0):
             pai = listaAberta[0]
@@ -266,6 +265,8 @@ class Astar():
                 getCamin = getCaminho(w)
                 qntPassos += 1
                 if(personagem.id == 1):
+                    custoH(w.x, w.y, personagem.desX, personagem.desY, filho.g)
+                    #print("Caminho[" + str(w.x) + "]["+ str(w.y) + "] -- F(n): " + str(w.f) + " -- G(n): " + str(w.g) + " -- H(n): " + str(w.h))
                     print("A quantidade de nós gerados foram: " + str(qntPassos))
                     print("Custo total: " + str(len(getCamin)))
                 qntPassos = 0
