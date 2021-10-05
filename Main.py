@@ -404,7 +404,7 @@ while True:
                     fantasma[len(fantasma)-1].rect.x = y*passo
                     fantasma[len(fantasma)-1].id = -1
                     todas_as_sprites.add(fantasma[len(fantasma)-1])
-                    
+    '''     
     for x in range(len(caminho)):
         for y in range(len(caminho)):
             if(caminho[x][y] == 1):
@@ -416,6 +416,8 @@ while True:
                 if(e == -1):
                     i = Personagem.Personagem()
                     i.sprite(tamanhoTela,spritePacMan)
+                    i.tamanho = tamanho
+                    pacMan.id = 1
                     pac.append(i)
                     pac[len(pac)-1].x = x
                     pac[len(pac)-1].tamanho = 5
@@ -424,9 +426,9 @@ while True:
                     pac[len(pac)-1].velocidade = 1
                     pac[len(pac)-1].rect.y = x*passo
                     pac[len(pac)-1].rect.x = y*passo
-                    pac[len(pac)-1].id = -1
+                    pac[len(pac)-1].id = 1
                     todas_as_sprites.add(pac[len(pac)-1])
-
+    '''
 
 
     if(len(fantasma) > 0):

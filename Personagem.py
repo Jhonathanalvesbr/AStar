@@ -31,6 +31,11 @@ class Personagem(pygame.sprite.Sprite):
             self.image = pygame.transform.rotate(self.image,200)
             
     def update(self):
+        if(self.id == 1 and self.caminhar == True):
+            self.image = self.sprites[0]
+            self.image = pygame.transform.scale(self.image,(int(self.tamanhoTela/25)*1,int(self.tamanhoTela/25)*1))
+            self.image = pygame.transform.rotate(self.image,self.angle)
+            return
         if(self.id == -1 and self.seguir == False):
             self.image = self.sprites[0]
             self.image = pygame.transform.scale(self.image,(int(self.tamanhoTela/25)*1,int(self.tamanhoTela/25)*1))
