@@ -26,7 +26,7 @@ def existe(lista, filho):
             return 1
     return -1
 
-def custoH(x, y, desX, desY,g):
+def custoH(x, y, desX, desY):
     dx = abs (x-desX)
     dy = abs (y-desX)
     a = [x,y]
@@ -54,8 +54,8 @@ def custoH(x, y, desX, desY,g):
     #return -1
     #return abs(min(dx,dy))
     #return g #Profundidade
-    return abs(x-desX) + abs(y-desY) #Manhattan
-    #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
+    #return abs(x-desX) + abs(y-desY) #Manhattan
+    return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0)) #Euclidiana
 
 def criaEstado(self, iniX, iniY):
     # Baixo
@@ -75,8 +75,9 @@ def criaEstado(self, iniX, iniY):
         # print("Esquerda")
         return Estado.Estado(iniX, iniY-1)
         # 135
-    
-    
+    else:
+        return -1
+    '''
     elif(iniX+1 >= 0 and iniY+1 >= 0 and iniX+1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX+1][iniY+1] == 0):
         # print("135")
         return Estado.Estado(iniX+1, iniY+1)
@@ -94,7 +95,7 @@ def criaEstado(self, iniX, iniY):
         return Estado.Estado(iniX-1, iniY+1)
     else:
         return -1
-    
+    '''
 
 def getCaminho(filho):
     pai = filho.parente
@@ -297,7 +298,7 @@ class Astar():
                 if(filho != None and existe(listaAberta, filho) != 1 and existe(listaFechada, filho) != 1):
                     qntPassos += 1
                     filho.g = pai.g + 1.0
-                    filho.h = custoH(filho.x, filho.y, personagem.desX, personagem.desY,filho.g)
+                    filho.h = custoH(filho.x, filho.y, personagem.desX, personagem.desY)
                     filho.f = filho.h+filho.g
                     #print(filho.f)
                     filho.parente = pai

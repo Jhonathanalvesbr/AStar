@@ -45,6 +45,8 @@ pacMan.id = 1
 todas_as_sprites = pygame.sprite.Group()
 todas_as_sprites.add(pacMan)
 fantasma = []
+pac = []
+pac.append(pacMan)
 
 pygame.init()
 janela = pygame.display.set_mode((tamanhoTela,tamanhoTela))
@@ -166,7 +168,7 @@ def getCaminho(personagem,pernosagemAtual,pernosagemAlvo):
     caminho[y][x] = 0
     return movimento
 
-'''
+
 caminho[3][4] = -1
 caminho[3][5] = -1
 caminho[3][6] = -1
@@ -284,8 +286,6 @@ caminho[6][20] = -1
 caminho[7][20] = -1
 caminho[7][21] = -1
 caminho[7][22] = -1
-caminho[4][21] = -1
-caminho[8][20] = -1
 caminho[8][21] = -1
 caminho[9][5] = -1
 caminho[9][6] = -1
@@ -329,7 +329,6 @@ caminho[12][10] = -1
 caminho[12][9] = -1
 caminho[11][12] = -1
 caminho[11][13] = -1
-caminho[11][14] = -1
 caminho[14][13] = -1
 caminho[14][14] = -1
 caminho[22][11] = -1
@@ -353,7 +352,6 @@ caminho[20][17] = -1
 caminho[21][17] = -1
 caminho[18][18] = -1
 caminho[18][19] = -1
-caminho[17][17] = -1
 caminho[16][17] = -1
 caminho[15][17] = -1
 caminho[13][17] = -1
@@ -382,7 +380,7 @@ caminho[11][21] = -1
 caminho[12][22] = -1
 caminho[12][21] = -1
 caminho[9][21] = -1
-'''
+
 while True:
 
     for x in range(len(caminho)):
@@ -406,7 +404,28 @@ while True:
                     fantasma[len(fantasma)-1].rect.x = y*passo
                     fantasma[len(fantasma)-1].id = -1
                     todas_as_sprites.add(fantasma[len(fantasma)-1])
-
+                    
+    for x in range(len(caminho)):
+        for y in range(len(caminho)):
+            if(caminho[x][y] == 1):
+                e = -1
+                for p in pac:
+                    if(f.x == x and f.y == y):
+                        e = 1
+                        break
+                if(e == -1):
+                    i = Personagem.Personagem()
+                    i.sprite(tamanhoTela,spritePacMan)
+                    pac.append(i)
+                    pac[len(pac)-1].x = x
+                    pac[len(pac)-1].tamanho = 5
+                    pac[len(pac)-1].caminhar = True
+                    pac[len(pac)-1].y = y
+                    pac[len(pac)-1].velocidade = 1
+                    pac[len(pac)-1].rect.y = x*passo
+                    pac[len(pac)-1].rect.x = y*passo
+                    pac[len(pac)-1].id = -1
+                    todas_as_sprites.add(pac[len(pac)-1])
 
 
 
