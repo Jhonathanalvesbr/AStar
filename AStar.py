@@ -54,9 +54,9 @@ def custoH(x, y, desX, desY, g):
 
     #return -1
     #return abs(min(dx,dy))
-    return g #Profundidade
+    #return g #Profundidade
     #return abs(x-desX) + abs(y-desY)+g #Manhattan
-    #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
+    return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0))+g #Euclidiana
 
 def criaEstado(self, iniX, iniY):
     # Baixo
@@ -76,6 +76,9 @@ def criaEstado(self, iniX, iniY):
         # print("Esquerda")
         return Estado.Estado(iniX, iniY-1)
         # 135
+    else:
+        return -1
+    '''
     elif(iniX+1 >= 0 and iniY+1 >= 0 and iniX+1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX+1][iniY+1] == 0):
         # print("135")
         return Estado.Estado(iniX+1, iniY+1)
@@ -93,6 +96,7 @@ def criaEstado(self, iniX, iniY):
         return Estado.Estado(iniX-1, iniY+1)
     else:
         return -1
+    '''
 
 def getCaminho(filho):
     pai = filho.parente
@@ -129,6 +133,7 @@ class Astar():
         elif(iniX >= 0 and iniY-1 >= 0 and iniX < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX][iniY-1] == 0 and i == 3):
             # print("Esquerda")
             return (Estado.Estado(iniX, iniY-1))
+        '''
         # 135
         elif(iniX+1 >= 0 and iniY+1 >= 0 and iniX+1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX+1][iniY+1] == 0 and i == 4):
             # print("135")
@@ -145,6 +150,7 @@ class Astar():
         elif(iniX-1 >= 0 and iniY+1 >= 0 and iniX-1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX-1][iniY+1] == 0 and i == 7):
             # print("45")
             return (Estado.Estado(iniX-1, iniY+1))
+        '''
 
     def win(self, e, target):
         if(e == -1):
@@ -167,6 +173,9 @@ class Astar():
         elif(iniX >= 0 and iniY-1 >= 0 and iniX < self.tamanho and iniY-1 < self.tamanho and self.caminho[iniX][iniY-1] == target):
             # print("Esquerda")
             return Estado.Estado(iniX, iniY-1)
+        else:
+            return -1
+        '''
         # 135
         elif(iniX+1 >= 0 and iniY+1 >= 0 and iniX+1 < self.tamanho and iniY+1 < self.tamanho and self.caminho[iniX+1][iniY+1] == target):
             # print("135")
@@ -185,6 +194,7 @@ class Astar():
             return Estado.Estado(iniX-1, iniY+1)
         else:
             return -1
+        '''
 
     def imprimir(self, caminho):
         self.caminho = self.caminho
