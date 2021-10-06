@@ -8,4 +8,3 @@ class Estado():
         self.g = 0
         self.h = 0
         self.f = 0
-        
