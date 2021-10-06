@@ -381,7 +381,7 @@ def c():
     caminho[12][21] = -1
     caminho[9][21] = -1
 
-#c()
+c()
 
 while True:
 
