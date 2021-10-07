@@ -55,7 +55,8 @@ def custoH(x, y, desX, desY):
     #return abs(min(dx,dy))
     #return g #Profundidade
     #return abs(x-desX) + abs(y-desY) #Manhattan
-    return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0)) #Euclidiana
+    #return math.sqrt(pow((x - desX), 2.0)+pow((y - desY), 2.0)) #Euclidiana
+    return 0
 
 def criaEstado(self, iniX, iniY):
     # Baixo
@@ -303,6 +304,7 @@ class Astar():
                     #print(filho.f)
                     filho.parente = pai
                     inserir(listaAberta, filho)
+        print("Não achou!")
 
     def imprimirCaminho(self, e):
         a = e.parente
