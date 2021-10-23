@@ -6,6 +6,7 @@ import pygame
 from pygame.locals import *
 from sys import exit
 import time
+import os
 
 targetPacMan = 1
 targetFantasma = -1
@@ -29,15 +30,16 @@ spritePacMan = []
 spriteComida = []
 inimigo = []
 comida = []
-spritePacMan.append(pygame.image.load('1.png'))
-spritePacMan.append(pygame.image.load('2.png'))
-spritePacMan.append(pygame.image.load('3.png'))
-spriteIninimigo.append(pygame.image.load('f1.png'))
-spriteIninimigo.append(pygame.image.load('f1L.png'))
-spriteIninimigo.append(pygame.image.load('f1R.png'))
-spriteIninimigo.append(pygame.image.load('f1up.png'))
-spriteIninimigo.append(pygame.image.load('f1down.png'))
-spriteComida.append(pygame.image.load('c1.png'))
+
+spritePacMan.append(pygame.image.load(os.getcwd()+'\\1.png'))
+spritePacMan.append(pygame.image.load(os.getcwd()+'\\2.png'))
+spritePacMan.append(pygame.image.load(os.getcwd()+'\\3.png'))
+spriteIninimigo.append(pygame.image.load(os.getcwd()+'\\f1.png'))
+spriteIninimigo.append(pygame.image.load(os.getcwd()+'\\f1L.png'))
+spriteIninimigo.append(pygame.image.load(os.getcwd()+'\\f1R.png'))
+spriteIninimigo.append(pygame.image.load(os.getcwd()+'\\f1up.png'))
+spriteIninimigo.append(pygame.image.load(os.getcwd()+'\\f1down.png'))
+spriteComida.append(pygame.image.load(os.getcwd()+'\\c1.png'))
 pacMan = Personagem.Personagem()
 pacMan.sprite(tamanhoTela,spritePacMan)
 pacMan.tamanho = tamanho
@@ -381,7 +383,7 @@ def c():
     caminho[12][21] = -1
     caminho[9][21] = -1
 
-c()
+#c()
 
 while True:
 
